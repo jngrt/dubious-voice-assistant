@@ -2,5 +2,9 @@
     {
         "merged": "/home/jg/AndroidStudioProjects/SpeechToTextImport/app/build/intermediates/res/merged/debug/menu/main.xml",
         "source": "/home/jg/AndroidStudioProjects/SpeechToTextImport/app/src/main/res/menu/main.xml"
+    },
+    {
+        "merged": "/home/jg/AndroidStudioProjects/Dubious/app/build/intermediates/res/merged/debug/menu/main.xml",
+        "source": "/home/jg/AndroidStudioProjects/Dubious/app/src/main/res/menu/main.xml"
     }
 ]

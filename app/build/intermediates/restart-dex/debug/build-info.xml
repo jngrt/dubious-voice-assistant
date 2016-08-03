@@ -2,20 +2,20 @@
 <instant-run
     abi="armeabi-v7a,armeabi"
     api-level="22"
-    density="xxhdpi"
+    density="xhdpi"
     format="7"
-    timestamp="29012441051289"
+    timestamp="143109431128701"
     token="-7744201618470310475" >
 
     <task
         name="javac"
-        duration="62" />
+        duration="56" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="16" />
+        duration="21" />
     <task
         name="verifier"
         duration="1" />
@@ -24,17 +24,12 @@
         location="/home/jg/AndroidStudioProjects/SpeechToTextImport/app/build/intermediates/transforms/dex/debug/folders/1000/5/slice_4/classes.dex"
         type="DEX" />
 
-    <build timestamp="22351535467559" >
+    <build timestamp="142624096489308" >
         <artifact
             location="/home/jg/AndroidStudioProjects/SpeechToTextImport/app/build/outputs/apk/app-debug.apk"
             type="MAIN" />
     </build>
-    <build timestamp="28502568841305" >
-        <artifact
-            location="/home/jg/AndroidStudioProjects/SpeechToTextImport/app/build/intermediates/res/resources-debug.ap_"
-            type="RESOURCES" />
-    </build>
-    <build timestamp="29012441051289" >
+    <build timestamp="143109431128701" >
         <artifact
             location="/home/jg/AndroidStudioProjects/SpeechToTextImport/app/build/intermediates/transforms/dex/debug/folders/1000/5/slice_4/classes.dex"
             type="DEX" />

@@ -1,2 +1,7 @@
+CHANGED,/home/jg/AndroidStudioProjects/SpeechToTextImport/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/com/the_incredible_machine/dubious/MainActivity$2$override.class
+CHANGED,/home/jg/AndroidStudioProjects/SpeechToTextImport/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/com/the_incredible_machine/dubious/MainActivity$1$override.class
 CHANGED,/home/jg/AndroidStudioProjects/SpeechToTextImport/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/com/the_incredible_machine/dubious/MainActivity$override.class
 CHANGED,/home/jg/AndroidStudioProjects/SpeechToTextImport/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/com/android/tools/fd/runtime/AppPatchesLoaderImpl.class
+CHANGED,/home/jg/AndroidStudioProjects/SpeechToTextImport/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/com/the_incredible_machine/dubious/MainActivity$3$override.class
+CHANGED,/home/jg/AndroidStudioProjects/SpeechToTextImport/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/com/the_incredible_machine/dubious/MainActivity$4$override.class
+CHANGED,/home/jg/AndroidStudioProjects/SpeechToTextImport/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/com/the_incredible_machine/dubious/MainActivity$4$1$override.class

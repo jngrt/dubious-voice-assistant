@@ -2,5 +2,9 @@
     {
         "merged": "/home/jg/AndroidStudioProjects/SpeechToTextImport/app/build/intermediates/res/merged/debug/drawable-xxhdpi-v4/ic_launcher.png",
         "source": "/home/jg/AndroidStudioProjects/SpeechToTextImport/app/src/main/res/drawable-xxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/home/jg/AndroidStudioProjects/Dubious/app/build/intermediates/res/merged/debug/drawable-xxhdpi-v4/ic_launcher.png",
+        "source": "/home/jg/AndroidStudioProjects/Dubious/app/src/main/res/drawable-xxhdpi/ic_launcher.png"
     }
 ]
