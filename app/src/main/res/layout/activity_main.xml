@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#888888"
+    android:background="#000000"
     android:backgroundTint="@color/bg_color"
     >
 
@@ -42,16 +42,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="200dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp" />
 
     <TextView
         android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/progressBar1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="47dp" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textColor="#666666"
+        android:scrollbars = "vertical"
+        />
 
 </RelativeLayout>
