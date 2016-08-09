@@ -2,6 +2,7 @@ package com.the_incredible_machine.dubious;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -14,7 +15,7 @@ import android.widget.TextView;
 import static java.util.Arrays.asList;
 
 
-public class MainActivity extends Activity implements SpeakerListener, RecognizerListener {
+public class MainActivity extends Activity implements SpeakerListener, RecognizerListener, StoryListener {
     private String LOG_TAG = "Dubious.Main";
 
     private enum State {
@@ -30,7 +31,7 @@ public class MainActivity extends Activity implements SpeakerListener, Recognize
     private View inputSquare;
     private View processingSquare;
 
-    private StoryManager storyManager = new StoryManager();
+    private StoryManager storyManager;
     private Speaker speaker;
     private Recognizer recognizer;
 
@@ -42,13 +43,13 @@ public class MainActivity extends Activity implements SpeakerListener, Recognize
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        storyManager = new StoryManager(this);
         speaker = new Speaker(this, this);
         recognizer = new Recognizer(this, this);
 
         initViews();
 
     }
-
 
     private void initViews() {
         setContentView(R.layout.activity_main);
@@ -70,16 +71,30 @@ public class MainActivity extends Activity implements SpeakerListener, Recognize
     /*********************************
      * STATE SWITCH
      *********************************/
+    private void nextStoryPart() {
+        Log.i(LOG_TAG, "nextStoryPart()");
+        if(storyManager.getCurrentStory().equals(StoryManager.START)) {
+            listen();
+        } else {
+            speak();
+        }
+    }
     private void speak(){
         Log.i(LOG_TAG, "** SPEAKING");
         state = State.SPEAKING;
-        speaker.speak( storyManager.getCurrentStoryText(), storyManager.getCurrentStory() );
+
+        speaker.speak(
+                storyManager.getCurrentStoryText(),
+                storyManager.getCurrentStory(),
+                storyManager.getCurrentSpeechRate()
+        );
         updateView();
     }
     private void listen(){
         Log.i(LOG_TAG, "** LISTEN");
         state = State.LISTENING;
         recognizer.startListening();
+        storyManager.startStoryTimer();
         updateView();
     }
 
@@ -148,7 +163,7 @@ public class MainActivity extends Activity implements SpeakerListener, Recognize
      *********************************/
     @Override
     public void speakerInitDone() {
-        speak();
+        nextStoryPart();
     }
 
     @Override
@@ -179,7 +194,8 @@ public class MainActivity extends Activity implements SpeakerListener, Recognize
 
         if ( storyManager.checkStoryTriggers(results) ) {
             recognizer.stopListening();
-            speak();
+            storyManager.stopStoryTimer();
+            nextStoryPart();
         } else {
             recognizer.continueListening();
             updateView();
@@ -207,5 +223,16 @@ public class MainActivity extends Activity implements SpeakerListener, Recognize
         progressBar.setIndeterminate(false);
         progressBar.setMax(10);
         inputSquare.setAlpha( 1f );
+    }
+
+
+    /*********************************
+     * STORY EVENTS
+     *********************************/
+    @Override
+    public void onStoryTimer() {
+        if( ! storyManager.getCurrentStory().equals(StoryManager.START))
+            recognizer.stopListening();
+        nextStoryPart();
     }
 }

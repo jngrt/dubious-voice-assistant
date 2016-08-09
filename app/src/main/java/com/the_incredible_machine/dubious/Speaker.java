@@ -79,10 +79,12 @@ public class Speaker {
     }
 
 
-    public void speak( String text, String key) {
+    public void speak( String text, String key, float speechRate) {
+        tts.setSpeechRate(speechRate);
         tts.speak(text, TextToSpeech.QUEUE_FLUSH,null, key);
 
     }
+
 
 
 }
