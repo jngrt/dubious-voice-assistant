@@ -26,14 +26,14 @@
         jar="/home/jg/AndroidStudioProjects/Dubious/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
         jumboMode="true"
         revision="24.0.1"
-        sha1="108ecc9d83ba1b19ed969efa12a1d29cdbeb8da3">
+        sha1="460241c1e4854cb0725a262c3d22a263bca726ff">
         <dex dex="/home/jg/AndroidStudioProjects/Dubious/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_27fb5be87f3e03c1acb45142dee97fa0e042019f/classes.dex" />
     </item>
     <item
         jar="/home/jg/AndroidStudioProjects/Dubious/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
         jumboMode="true"
         revision="24.0.1"
-        sha1="5ef708a883212ffeda34bf51eecc1513a550eb16">
+        sha1="f1b406ea2ab68faa03545ef9a5bc7e6cb04d3dc6">
         <dex dex="/home/jg/AndroidStudioProjects/Dubious/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_298c76191d9ad5493ed90acff088ad12cc4ffc32/classes.dex" />
     </item>
     <item

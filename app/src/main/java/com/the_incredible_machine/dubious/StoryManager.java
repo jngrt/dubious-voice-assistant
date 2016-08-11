@@ -13,7 +13,6 @@ import static java.util.Arrays.asList;
 public class StoryManager {
     public static final String LOG_TAG = "StoryManager";
     public static final String NO_FOLLOWUP = "noFollowUp";
-    public static final String END_OF_STORY = "endOfStory";
     public static final String NO_TRIGGERS = "noTriggers";
 
     public static final String START = "start";
@@ -101,7 +100,7 @@ public class StoryManager {
                 ));
         storyParts.put(START4,
                 new StoryPart(
-                        "beep beep",
+                        "hey you, come over here",
                         startTriggers,
                         startFollowUps,
                         START,
@@ -150,7 +149,7 @@ public class StoryManager {
                 new StoryPart(
                    "Notification: background process completed, all information about " +
                            "subject zero zero three eight nine has been extracted. " +
-                           "Please, move along now.",
+                           "Please, move along now. Goodbye",
                         asList(NO_TRIGGERS),
                         asList(NO_FOLLOWUP),
                         START,
@@ -160,7 +159,7 @@ public class StoryManager {
                 new StoryPart(
                         "Advertisement error!\n" +
                                 "Your engagement with online advertisements is not high enough. " +
-                                "This interaction will be terminated. Please move along.",
+                                "This interaction will be terminated. Please move along. Goodbye",
                         asList(NO_TRIGGERS),
                         asList(NO_FOLLOWUP),
                         START,
@@ -168,9 +167,9 @@ public class StoryManager {
                 ));
         storyParts.put(END3,
                 new StoryPart(
-                        "Want to win prizes?! Sure you do! " +
+                        "Do you want to win prizes?! Sure you do! " +
                                 "Please go outside and bring me another subject " +
-                                "and you will be entered in our daily sweepstakes.... Go NOW!",
+                                "and you will be entered in our daily sweepstakes.... Go NOW! Goodbye",
                         asList(NO_TRIGGERS),
                         asList(NO_FOLLOWUP),
                         START,
