@@ -41,6 +41,7 @@ public class StoryManager {
     public static final String TERMS1 = "terms1";
     public static final String TERMS2 = "terms2";
     public static final String TERMS3 = "terms3";
+    public static final String TERMS_CONTINUE_N = "termsContinueN";
 
     public static final String TICKET = "ticket";
     public static final String TICKET_KLM = "ticketKLM";
@@ -64,8 +65,72 @@ public class StoryManager {
         this.storyListener = handler;
         initTimerHandler();
 
-        List<String> startTriggers =  asList(NO_TRIGGERS);
-        List<String> startFollowUps = asList(HELLO, TICKET);
+        List<String> menuFollowUps = asList(HELLO, TICKET);
+        int menuTimeOut = 4000;
+
+
+        storyParts.put( MENU_SETUP,
+                new StoryPart(
+                        "Don't forget to setup your profile",
+                        asList(NO_TRIGGERS),
+                        menuFollowUps,
+                        MENU,
+                        menuTimeOut
+                ));
+        storyParts.put( MENU_TICKET,
+                new StoryPart(
+                        "You still need to book your ticket to London for next week",
+                        asList(NO_TRIGGERS),
+                        menuFollowUps,
+                        MENU,
+                        menuTimeOut
+                ));
+        storyParts.put( MENU_TOILET,
+                new StoryPart(
+                        "Incoming update from your toilet paper holder," +
+                                "you will need to order toilet paper soon.",
+                        asList(NO_TRIGGERS),
+                        menuFollowUps,
+                        MENU,
+                        menuTimeOut
+                ));
+        storyParts.put( MENU_MOM,
+                new StoryPart(
+                        "Your mother called an hour ago, you might want to return the call.",
+                        asList(NO_TRIGGERS),
+                        menuFollowUps,
+                        MENU,
+                        menuTimeOut
+                ));
+        storyParts.put( MENU_VACUUM,
+                new StoryPart(
+                        "Incoming notification: your vacuum cleaner broke down",
+                        asList(NO_TRIGGERS),
+                        menuFollowUps,
+                        MENU,
+                        menuTimeOut
+                ));
+        storyParts.put( MENU_MSG,
+                new StoryPart(
+                        "You have one incoming direct message",
+                        asList(NO_TRIGGERS),
+                        menuFollowUps,
+                        MENU,
+                        menuTimeOut
+                ));
+
+
+
+        storyParts.put( HELLO1,
+                new StoryPart(
+                        "Hello stranger. I am Iris. And who might you be?",
+                        asList(NO_TRIGGERS),
+                        menuFollowUps,
+                        MENU,
+                        menuTimeOut
+                ));
+
+
         storyParts.put(START,
                 new StoryPart(
                         "",
@@ -200,7 +265,7 @@ public class StoryManager {
 
         storyParts.put(HELLO,
                 new StoryPart(
-                        "Hello stranger. I am EVO. And who might you be?",
+                        "Hello stranger. I am Iris. And who might you be?",
                         asList("hi", "hello", "greetings", "hey", "yo"),
                         asList(NO_FOLLOWUP),
                         HELLO_CONTINUE,
@@ -209,8 +274,7 @@ public class StoryManager {
         storyParts.put(HELLO_CONTINUE,
                 new StoryPart(
                         "Sorry, I didn't get that. " +
-                                "I will call you subject zero zero three eight nine. " +
-                                "You sure look like a subject zero zero three eight nine. " +
+                                "I will call you subject zero three eight. " +
                                 "By continuing, you will agree to my terms of service. " +
                                 "If you need more information, feel free to ask me about it. " +
                                 "To verify your account, I require your email address and " +
@@ -220,7 +284,7 @@ public class StoryManager {
                 ));
         storyParts.put(HELLO_CONTINUE_Y,
                 new StoryPart(
-                        "LInking information to your personal profile. " +
+                        "Linking information to your personal profile. " +
                                 "You just sit back and relax. " +
                                 "No need to tell me anything. " +
                                 "I already know everything about you.",
@@ -267,14 +331,8 @@ public class StoryManager {
                 ));
         storyParts.put(TERMS2,
                 new StoryPart(
-                        "Your access to and use of the Service is conditioned on your acceptance of and " +
-                                "compliance with these Terms. " +
-                                "These Terms apply to all visitors, users and others who access or use the Service.\n" +
-                                "\n" +
                                 "By accessing or using the Service you agree to be bound by these Terms. " +
                                 "If you disagree with any part of the terms then you may not access the Service.\n" +
-                                "\n" +
-                                "Termination\n" +
                                 "\n" +
                                 "We may terminate or suspend access to our Service immediately, " +
                                 "without prior notice or liability, for any reason whatsoever, " +
@@ -283,8 +341,6 @@ public class StoryManager {
                                 "All provisions of the Terms which by their nature should survive termination " +
                                 "shall survive termination, including, without limitation, ownership provisions, " +
                                 "warranty disclaimers, indemnity and limitations of liability.\n" +
-                                "\n" +
-                                "Changes\n" +
                                 "\n" +
                                 "We reserve the right, at our sole discretion, to modify or replace these Terms " +
                                 "at any time.\n",
@@ -302,6 +358,14 @@ public class StoryManager {
                                 "credit card information. Would you like to continue?",
                         asList(NO_TRIGGERS),
                         asList(HELLO_CONTINUE_N, HELLO_CONTINUE_Y)
+                ));
+        storyParts.put(TERMS_CONTINUE_N,
+                new StoryPart(
+                        "You want to continue without an account? No problem. \n" +
+                                "Oh wait, I just got the results from the face recognition algorithm: " +
+                                "It's a positive match. I've just created an account for you anyway. ",
+                        asList("no", "never", "don't agree", "don't want"),
+                        asList(NO_FOLLOWUP)
                 ));
 
         storyParts.put(TICKET,
@@ -347,8 +411,8 @@ public class StoryManager {
                         "Just kidding, I honestly don't care what you want. " +
                                 "I've booked a KLM flight for you. " +
                                 "And its going to be expensive.",
-                        asList("easy jet", "easyjet", "cheapest", "cheap one",
-                                "cheap 1", "doesn't matter", "don't care", "you choose",
+                        asList("easy", "easy jet", "easyjet", "cheapest",
+                                "cheap", "doesn't matter", "don't care", "you choose",
                                 "whatever", "who cares", "don't want"),
                         asList(NO_FOLLOWUP),
                         END3,
