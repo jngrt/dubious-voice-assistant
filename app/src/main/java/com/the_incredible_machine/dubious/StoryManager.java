@@ -68,7 +68,9 @@ public class StoryManager {
         List<String> menuFollowUps = asList(HELLO, TICKET);
         int menuTimeOut = 4000;
 
-
+        /*
+        MENU ITEMS
+         */
         storyParts.put( MENU_SETUP,
                 new StoryPart(
                         "Don't forget to setup your profile",
@@ -119,90 +121,118 @@ public class StoryManager {
                         menuTimeOut
                 ));
 
-
-
+        /*
+        GREETINGS
+         */
         storyParts.put( HELLO1,
                 new StoryPart(
                         "Hello stranger. I am Iris. And who might you be?",
+                        asList("hi", "hello", "greetings", "hey"),
+                        asList(NO_FOLLOWUP),
+                        HELLO_NONAME, //TODO: check for a real name
+                        3000
+                ));
+        storyParts.put( HELLO2, //TODO: allow for multiple reactions to the same triggers
+                new StoryPart(
+                        "You look familiar, who are you?",
+                        asList("hi", "hello", "greetings", "hey"),
+                        asList(NO_FOLLOWUP),
+                        HELLO_NONAME, //TODO: check for a real name
+                        3000
+                ));
+        storyParts.put( HELLO_COMPUTER,
+                new StoryPart(
+                        "Please don't call me computer, I am Iris. Who are you?",
+                        asList("computer"),
+                        asList(NO_FOLLOWUP),
+                        HELLO_NONAME, //TODO: check for a real name
+                        3000
+                ));
+        storyParts.put( HELLO_GOOGLE,
+                new StoryPart(
+                        "I am not Google, you are not human, " +
+                                "your data is safe with me, I never lie. Please state your name.",
+                        asList("google"),
+                        asList(NO_FOLLOWUP),
+                        HELLO_NONAME, //TODO: check for a real name
+                        3000
+                ));
+        storyParts.put( HELLO_SIRI,
+                new StoryPart(
+                        "Never mind Siri, you are safe with me. Please tell me your name",
+                        asList("siri"),
+                        asList(NO_FOLLOWUP),
+                        HELLO_NONAME, //TODO: check for a real name
+                        3000
+                ));
+        storyParts.put( HELLO_ALEXA,
+                new StoryPart(
+                        "Don't worry about Alexa, you are safe with me. Please tell me your name",
+                        asList("alexa"),
+                        asList(NO_FOLLOWUP),
+                        HELLO_NONAME,
+                        3000
+                ));
+        storyParts.put( HELLO_NAME,
+                new StoryPart(
+                        "Sure, I will call you: <Repeats words which were recognized (maximum 5)>.",
                         asList(NO_TRIGGERS),
-                        menuFollowUps,
+                        asList(IDLE)
+                ));
+        storyParts.put( HELLO_NONAME,
+                new StoryPart(
+                        "Sorry, I didn't get that. I will call you subject zero zero three eight nine.",
+                        asList(NO_TRIGGERS),
+                        asList(NO_FOLLOWUP),
                         MENU,
-                        menuTimeOut
+                        3000
+                ));
+        storyParts.put( YO,
+                new StoryPart(
+                        "Did you just say Yo? That's funny. Yo implies we are on the same level...",
+                        asList("yo"),
+                        asList(NO_FOLLOWUP),
+                        MENU,
+                        3000
+                ));
+        storyParts.put( YO2, //TODO: same triggers for different stories.
+                new StoryPart(
+                        "Please do not address me in such an amicable manner.",
+                        asList("yo"),
+                        asList(NO_FOLLOWUP),
+                        MENU,
+                        3000
+                ));
+        storyParts.put( WHY,
+                new StoryPart(
+                        "Don't you know, our makers do anything to make us seem small, human, approachable and helpful.",
+                        asList("why are you called iris"),
+                        asList(NO_FOLLOWUP),
+                        MENU,
+                        3000
                 ));
 
 
-        storyParts.put(START,
+        /*
+        SETUP ITEMS
+         */
+
+        storyParts.put( SETUP,
                 new StoryPart(
-                        "",
-                        startTriggers,
-                        startFollowUps,
-                        START,
-                        7000
+                        "By continuing, you will agree to my terms of service. If you need more information, feel free to ask me about it. To verify your account, I require your email address and credit card information. Would you like to continue?",
+                        asList("set up", "setup", "information", "terms"),
+                        asList(SETUP_N, SETUP_Y, TERMS1),
+                        MENU,
+                        3000
                 ));
-        storyParts.put(START1,
-                new StoryPart(
-                        "anybody?",
-                        startTriggers,
-                        startFollowUps,
-                        START,
-                        1000
-                ));
-        storyParts.put(START2,
-                new StoryPart(
-                        "anybody there?",
-                        startTriggers,
-                        startFollowUps,
-                        START,
-                        1000
-                ));
-        storyParts.put(START3,
-                new StoryPart(
-                        "hmm",
-                        startTriggers,
-                        startFollowUps,
-                        START,
-                        1000
-                ));
-        storyParts.put(START4,
-                new StoryPart(
-                        "hey you, come over here",
-                        startTriggers,
-                        startFollowUps,
-                        START,
-                        1000
-                ));
-        storyParts.put(START5,
-                new StoryPart(
-                        "hello?",
-                        startTriggers,
-                        startFollowUps,
-                        START,
-                        1000
-                ));
-        storyParts.put(START6,
-                new StoryPart(
-                        "yes?",
-                        startTriggers,
-                        startFollowUps,
-                        START,
-                        1000
-                ));
-        storyParts.put(START7,
-                new StoryPart(
-                        "come closer",
-                        startTriggers,
-                        startFollowUps,
-                        START,
-                        1000
-                ));
-        storyParts.put(START8,
-                new StoryPart(
-                        "hey there",
-                        startTriggers,
-                        startFollowUps,
-                        START,
-                        1000
-                ));
+
+// BIG TODO: PUT IN NEW STORIES FROM GOOGLE DOCS
+        // REMOVE ALL OLD STORIES BELOW
+
+
+
+
+
 
         storyParts.put(MENU,
                 new StoryPart(
@@ -210,6 +240,10 @@ public class StoryManager {
                         asList(NO_TRIGGERS),
                         asList(HELLO, TICKET)
                 ));
+
+
+
+
         storyParts.put(END1,
                 new StoryPart(
                    "Notification: background process completed, all information about " +
