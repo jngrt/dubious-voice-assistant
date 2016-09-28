@@ -83,6 +83,9 @@ public class MainActivity extends Activity implements SpeakerListener, Recognize
         Log.i(LOG_TAG, "** SPEAKING");
         state = State.SPEAKING;
 
+        storyManager.stopStoryTimer();
+        //recognizer.destroy();
+
         speaker.speak(
                 storyManager.getCurrentStoryText(),
                 storyManager.getCurrentStory(),
@@ -234,7 +237,7 @@ public class MainActivity extends Activity implements SpeakerListener, Recognize
     @Override
     public void onStoryTimer() {
         //if( ! storyManager.getCurrentStory().equals(StoryManager.START))
-        //    recognizer.stopListening();
+        recognizer.stopListening();
         //TODO: check what to do
         nextStoryPart();
     }

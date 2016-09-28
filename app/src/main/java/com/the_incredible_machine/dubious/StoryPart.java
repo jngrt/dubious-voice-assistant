@@ -14,7 +14,7 @@ public class StoryPart {
     private int timeOut = 0;
     private float speechRate = 1;
     private int voiceId = 117;
-    private float pitch = 1;
+    private float pitch = 1.2f;
 
     public StoryPart(String story, List<String> triggers, List<String> followUps) {
         this.story = story;

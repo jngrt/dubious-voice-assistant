@@ -109,7 +109,7 @@ public class StoryManager {
 
 
     private int evilVoice = 96;
-    private float evilPitch = 0.6f;
+    private float evilPitch = 0.5f;
     private float evilRate = 1.8f;
     private int defaultVoice = 117;
 
@@ -136,10 +136,10 @@ public class StoryManager {
                 SETUP, TICKET, PAPER, MOM, VACUUM, FAMILY, HELLO1, HELLO2,
                 HELLO_COMPUTER, HELLO_GOOGLE, HELLO_SIRI, HELLO_ALEXA,
                 HELLO_NONAME, HELLO_YO, HELLO_WHY);
-        int menuTimeOut = 6000;
+        int menuTimeOut = 8000;
         int endDelay = 1000;
-        int repeatDelay = 4000;
-        int storyTimeOut = 7000;
+        int repeatDelay = 5000;
+        int storyTimeOut = 8000;
 
         /*
         MENU ITEMS
@@ -343,7 +343,7 @@ public class StoryManager {
         storyParts.put( SETUP_N_N,
                 new StoryPart(
                         "Your lack of trust is unsettling. But don't worry. The terms of service to which you've agreed, clearly state that I can ignore your instructions whenever I want. ",
-                        asList(NO_TRIGGERS),
+                        asList("no","nope", "cancel", "stop"),
                         asList(NO_FOLLOWUP),
                         STORY_END,
                         endDelay
@@ -361,7 +361,7 @@ public class StoryManager {
                 ));
         storyParts.put( TERMS2,
                 new StoryPart(
-                        "Your access to and use of the Service is conditioned on your acceptance of and compliance with these Terms. These Terms apply to all visitors, users and others who access or use the Service. By accessing or using the Service you agree to be bound by these Terms.  If you disagree with any part of the terms then you may not access the Service. We may terminate or suspend access to our Service immediately,  without prior notice or liability, for any reason whatsoever, including without limitation if you breach the Terms. All provisions of the Terms which by their nature should survive termination shall survive termination, including, without limitation, ownership provisions, warranty disclaimers, indemnity and limitations of liability. We reserve the right, at our sole discretion, to modify or replace these Terms at any time.",
+                        "We may terminate or suspend access to our Service immediately,  without prior notice or liability, for any reason whatsoever, including without limitation if you breach the Terms. All provisions of the Terms shall survive termination, including, without limitation, ownership provisions, warranty disclaimers, indemnity and limitations of liability.",
                         asList(NO_TRIGGERS),
                         asList(NO_FOLLOWUP),
                         TERMS3,
@@ -427,7 +427,7 @@ public class StoryManager {
         storyParts.put( TICKET_KLM,
                 new StoryPart(
                         "Oh no, your citizen score just dropped below 3120, I cannot book KLM for you... I went ahead and booked EasyJet. There really is not that much else available, plus they have some nice commission rates for non-human agents.",
-                        asList(NO_TRIGGERS),
+                        asList("KLM", "kay el", "klm", "k l m", "kay el em", "best", "expensive", "fastest", "salem", "k l n"),
                         asList(NO_FOLLOWUP),
                         STORY_END,
                         endDelay
@@ -435,7 +435,7 @@ public class StoryManager {
         storyParts.put( TICKET_EASYJET,
                 new StoryPart(
                         "OK, booking EasyJet. This flight might have a relatively large number of people from lower income classes. Beware, this could lower your citizen score.",
-                        asList(NO_TRIGGERS),
+                        asList("cheapest", "easy jet", "easyjet"),
                         asList(NO_FOLLOWUP),
                         STORY_END,
                         endDelay
@@ -509,7 +509,7 @@ public class StoryManager {
         storyParts.put( MOM,
                 new StoryPart(
                         "Let's see if we can reach your mother",
-                        asList("mom", "mother", "return" ),
+                        asList("mom", "mother", "return", "call", "phone"),
                         asList(NO_FOLLOWUP),
                         MOM_LOOKUP,
                         1500
@@ -577,7 +577,7 @@ public class StoryManager {
         storyParts.put( VACUUM_Y,
                 new StoryPart(
                         "Your Cyclonix will be shipped today. Don't forget, If you convince others to buy Cyclonix we can give you a citizen score bonus!",
-                        asList(NO_TRIGGERS),
+                        asList("cyclonix", "yes", "please", "buy it", "yeah", "sure"),
                         asList(NO_FOLLOWUP),
                         STORY_END,
                         endDelay
@@ -585,7 +585,7 @@ public class StoryManager {
         storyParts.put( VACUUM_N,
                 new StoryPart(
                         "Your citizen score is too low to look for alternative brands. Please listen to this sponsored message to continue:",
-                        asList(NO_TRIGGERS),
+                        asList("other", "brands", "options", "no"),
                         asList(NO_FOLLOWUP),
                         VACUUM_MSG1,
                         100,
@@ -636,7 +636,7 @@ public class StoryManager {
         storyParts.put( VACUUM_MSG_Y,
                 new StoryPart(
                         "Excellent, your citizen score will be updated tomorrow.",
-                        asList(NO_TRIGGERS),
+                        asList("yes", "yeah", "support"),
                         asList(NO_FOLLOWUP),
                         STORY_END,
                         endDelay
@@ -644,7 +644,7 @@ public class StoryManager {
         storyParts.put( VACUUM_MSG_N,
                 new StoryPart(
                         "Too bad. If you are not willing to cooperate I can no longer be of service. Please move along.",
-                        asList(NO_TRIGGERS),
+                        asList("no", "nope", "don't"),
                         asList(NO_FOLLOWUP),
                         MENU_SILENT,
                         100
@@ -777,6 +777,8 @@ public class StoryManager {
                         200
                 ));
 
+        setRandomMenu();
+
     }
 
     public Boolean checkStoryTriggers( ArrayList<String> matches ) {
@@ -891,7 +893,7 @@ public class StoryManager {
                 CONTINUE1, CONTINUE2, CONTINUE3
         ));
         continues.remove( lastContinue );
-        int index = 1 + (int) (Math.random() * (continues.size()));
+        int index = (int) (Math.random() * (continues.size()));
         checkAndSetStory( continues.get(index) );
         lastContinue = currentStory;
         continueCount = 1;
@@ -901,7 +903,7 @@ public class StoryManager {
                 END1, END2, END3, END4
         ));
         endings.remove( lastEnding );
-        int index = 1 + (int) (Math.random() * (endings.size()));
+        int index = (int) (Math.random() * (endings.size()));
         checkAndSetStory( endings.get(index) );
         lastEnding = currentStory;
         continueCount = 0;

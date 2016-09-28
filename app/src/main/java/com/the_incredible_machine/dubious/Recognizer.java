@@ -78,6 +78,8 @@ public class Recognizer implements RecognitionListener {
     public void stopListening() {
         state = State.STOPPED;
         speechRecognizer.cancel();
+        cancelListeningCheck();
+        cancelStartedCheck();
     }
 
     public void continueListening() {

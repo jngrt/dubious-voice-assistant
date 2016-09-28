@@ -57,7 +57,7 @@ public class Speaker {
                             Log.i(LOG_TAG, "!!! NO VOICES");
                         }
 
-                        tts.setVoice(voices.get(117));
+                        //tts.setVoice(voices.get(117));
                         // male voice: 96
                         // female voice : 117
                         Voice cv = tts.getVoice();
@@ -111,7 +111,7 @@ public class Speaker {
     public void speak( String text, String key, float speechRate, float pitch, int voiceId) {
         tts.setSpeechRate(speechRate);
         tts.setPitch(pitch);
-        tts.setVoice(voices.get(voiceId));
+        //tts.setVoice(voices.get(voiceId));
         tts.speak(text, TextToSpeech.QUEUE_FLUSH,null, key);
 
     }
