@@ -13,6 +13,8 @@ public class StoryPart {
     private String timeOutFollowUp;
     private int timeOut = 0;
     private float speechRate = 1;
+    private int voiceId = 117;
+    private float pitch = 1;
 
     public StoryPart(String story, List<String> triggers, List<String> followUps) {
         this.story = story;
@@ -35,6 +37,16 @@ public class StoryPart {
         this.timeOutFollowUp = timeOutFollowUp;
         this.timeOut = timeOut;
         this.speechRate = speechRate;
+    }
+    public StoryPart(String story, List<String> triggers, List<String> followUps, String timeOutFollowUp, int timeOut, float speechRate, float pitch, int voiceId) {
+        this.story = story;
+        this.triggers = triggers;
+        this.followUps = followUps;
+        this.timeOutFollowUp = timeOutFollowUp;
+        this.timeOut = timeOut;
+        this.speechRate = speechRate;
+        this.pitch = pitch;
+        this.voiceId = voiceId;
     }
 
     public Boolean checkTriggers(String input ) {
@@ -69,5 +81,13 @@ public class StoryPart {
 
     public float getSpeechRate() {
         return speechRate;
+    }
+
+    public int getVoiceId() {
+        return voiceId;
+    }
+
+    public float getPitch() {
+        return pitch;
     }
 }

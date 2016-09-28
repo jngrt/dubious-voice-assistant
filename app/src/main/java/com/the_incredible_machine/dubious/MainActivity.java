@@ -73,11 +73,11 @@ public class MainActivity extends Activity implements SpeakerListener, Recognize
      *********************************/
     private void nextStoryPart() {
         Log.i(LOG_TAG, "nextStoryPart()");
-        if(storyManager.getCurrentStory().equals(StoryManager.START)) {
-            listen();
-        } else {
-            speak();
-        }
+        //if(storyManager.getCurrentStory().equals(StoryManager.START)) {
+        //    listen();
+        //} else {
+        speak();
+        //}
     }
     private void speak(){
         Log.i(LOG_TAG, "** SPEAKING");
@@ -86,7 +86,9 @@ public class MainActivity extends Activity implements SpeakerListener, Recognize
         speaker.speak(
                 storyManager.getCurrentStoryText(),
                 storyManager.getCurrentStory(),
-                storyManager.getCurrentSpeechRate()
+                storyManager.getCurrentSpeechRate(),
+                storyManager.getCurrentPitch(),
+                storyManager.getCurrentVoiceId()
         );
         updateView();
     }
@@ -231,8 +233,25 @@ public class MainActivity extends Activity implements SpeakerListener, Recognize
      *********************************/
     @Override
     public void onStoryTimer() {
-        if( ! storyManager.getCurrentStory().equals(StoryManager.START))
-            recognizer.stopListening();
+        //if( ! storyManager.getCurrentStory().equals(StoryManager.START))
+        //    recognizer.stopListening();
+        //TODO: check what to do
         nextStoryPart();
+    }
+
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+
+        super.onWindowFocusChanged(hasFocus);
+
+        if (hasFocus) {
+            this.findViewById(android.R.id.content).setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);}
     }
 }
