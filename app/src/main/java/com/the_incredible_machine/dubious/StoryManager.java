@@ -266,7 +266,7 @@ public class StoryManager {
                         asList(NO_TRIGGERS),
                         menuFollowUps,
                         MENU_RANDOM,
-                        3000
+                        menuTimeOut
                 ));
         storyParts.put( HELLO_YO,
                 new StoryPart(
@@ -274,7 +274,7 @@ public class StoryManager {
                         asList("yo"),
                         menuFollowUps,
                         MENU_RANDOM,
-                        3000
+                        menuTimeOut
                 ));
 
         storyParts.put( HELLO_WHY,
@@ -577,7 +577,7 @@ public class StoryManager {
         storyParts.put( VACUUM_Y,
                 new StoryPart(
                         "Your Cyclonix will be shipped today. Don't forget, If you convince others to buy Cyclonix we can give you a citizen score bonus!",
-                        asList("cyclonix", "yes", "please", "buy it", "yeah", "sure"),
+                        asList("cyclonix", "yes", "please", "buy it", "yeah", "sure", "cyclone", "cyclonic", "cyclonics"),
                         asList(NO_FOLLOWUP),
                         STORY_END,
                         endDelay
@@ -787,12 +787,16 @@ public class StoryManager {
         //
         if (currentStory == null ||
                 currentStory.length() == 0) {
+            Log.i(LOG_TAG, "no triggers because currentStory is undefined");
             return false;
         }
 
         List<String> partsToCheck = storyParts.get(currentStory).getFollowUps();
-        if (partsToCheck.contains(NO_FOLLOWUP))
+        if (partsToCheck.contains(NO_FOLLOWUP)) {
+            Log.i(LOG_TAG, "no triggers because NO_FOLLOWUP is set");
             return false;
+
+        }
 
         for (String result : matches) {
             for ( String key : partsToCheck ) {
@@ -802,6 +806,7 @@ public class StoryManager {
                 }
             }
         }
+        Log.i(LOG_TAG, "no triggers because none were found in storyparts");
 
         return false;
     }
@@ -847,6 +852,7 @@ public class StoryManager {
     }
 
     public void startStoryTimer(){
+        stopStoryTimer();
         StoryPart story = storyParts.get(currentStory);
         if(story.getTimeOutFollowUp() != null) {
             timerHandler.postDelayed(timerRunnable, story.getTimeOut());

@@ -18,7 +18,7 @@ public class Recognizer implements RecognitionListener {
     private enum State {
         INIT, STARTING, LISTENING, STOPPED
     }
-    private boolean busyError = false;
+    //private boolean busyError = false;
     private boolean partialResults = false;
 
     private State state = State.INIT;
@@ -27,10 +27,10 @@ public class Recognizer implements RecognitionListener {
     private Intent recognizerIntent;
     private Context context;
 
-    private Handler handler;
-    private Runnable startedRunnable;
-    private Runnable listeningRunnable;
-    private Runnable busyRunnable;
+//    private Handler handler;
+//    private Runnable startedRunnable;
+//    private Runnable listeningRunnable;
+//    private Runnable busyRunnable;
 
     private RecognizerListener listener;
 
@@ -40,7 +40,7 @@ public class Recognizer implements RecognitionListener {
         this.context = context;
         this.listener = listener;
         init();
-        initHandler();
+        //initHandler();
     }
 
     public Boolean isListening() {
@@ -49,8 +49,7 @@ public class Recognizer implements RecognitionListener {
 
     private void init() {
         Log.i(LOG_TAG, "initSpeechRec");
-        speechRecognizer = SpeechRecognizer.createSpeechRecognizer(context);
-        speechRecognizer.setRecognitionListener(this);
+
 
         recognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE,
@@ -65,21 +64,35 @@ public class Recognizer implements RecognitionListener {
     }
 
     public void startListening() {
-        busyError = false;
+        Log.i(LOG_TAG, "startListening");
+
+        //busyError = false;
+
+        //init
+        speechRecognizer = SpeechRecognizer.createSpeechRecognizer(context);
+        speechRecognizer.setRecognitionListener(this);
 
         //start
         state = State.STARTING;
         speechRecognizer.startListening(recognizerIntent);
         listener.onRecognizerInitStarted();
-        scheduleStartedCheck();
+
+
+        //scheduleStartedCheck();
 
     }
 
     public void stopListening() {
+        Log.i(LOG_TAG, "stopListening");
+
         state = State.STOPPED;
-        speechRecognizer.cancel();
-        cancelListeningCheck();
-        cancelStartedCheck();
+        //speechRecognizer.cancel();
+
+        //We now destroy each time and do re-init when starting
+        speechRecognizer.destroy();
+
+        //cancelListeningCheck();
+        //cancelStartedCheck();
     }
 
     public void continueListening() {
@@ -98,16 +111,18 @@ public class Recognizer implements RecognitionListener {
     }
 
     public void destroy() {
+        Log.i(LOG_TAG, "destroy");
+
         speechRecognizer.destroy();
-        cancelListeningCheck();
-        cancelStartedCheck();
+        //cancelListeningCheck();
+        //cancelStartedCheck();
     }
 
 
     private void resetListening() {
         Log.i(LOG_TAG, "resetListening");
         destroy();
-        init();
+        //init();
         startListening();
     }
 
@@ -119,7 +134,7 @@ public class Recognizer implements RecognitionListener {
         listener.onRecognizerSpeechBegin();
 
         //reset check
-        scheduleListeningCheck();
+        //scheduleListeningCheck();
     }
 
     @Override
@@ -142,8 +157,9 @@ public class Recognizer implements RecognitionListener {
         Log.i(LOG_TAG, "onError " + errorMessage);
 
         if( errorCode == SpeechRecognizer.ERROR_RECOGNIZER_BUSY ){
-            busyError = true;
-            scheduleBusyCheck();
+            //busyError = true;
+            //scheduleBusyCheck();
+            resetListening();
         } else if ((errorCode == SpeechRecognizer.ERROR_NO_MATCH)
                 || (errorCode == SpeechRecognizer.ERROR_SPEECH_TIMEOUT)) {
             resetListening();
@@ -158,7 +174,7 @@ public class Recognizer implements RecognitionListener {
     public void onPartialResults(Bundle results) {
         Log.i(LOG_TAG, "onPartialResults");
 
-        scheduleListeningCheck();
+        //scheduleListeningCheck();
 
         ArrayList<String> matches = results
                 .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
@@ -181,10 +197,10 @@ public class Recognizer implements RecognitionListener {
 
         listener.onRecognizerInitDone();
 
-        busyError = false;
-        cancelBusyCheck();
-        cancelStartedCheck();
-        scheduleListeningCheck();
+        //busyError = false;
+        //cancelBusyCheck();
+        //cancelStartedCheck();
+        //scheduleListeningCheck();
 
     }
 
@@ -192,14 +208,18 @@ public class Recognizer implements RecognitionListener {
     public void onResults(Bundle results) {
         Log.i(LOG_TAG, "onResults");
 
-        cancelListeningCheck();
-        busyError = false;
+        //cancelListeningCheck();
+        //busyError = false;
         partialResults = false;
 
-        ArrayList<String> matches = results
-                .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+        if ( state == State.LISTENING ) {
+            ArrayList<String> matches = results
+                    .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
 
-        listener.onRecognizerResult(matches);
+            listener.onRecognizerResult(matches);
+        } else {
+            Log.i(LOG_TAG, "got results, but state is "+state.toString());
+        }
     }
 
 
@@ -252,6 +272,7 @@ public class Recognizer implements RecognitionListener {
      * HANDLER / WATCHDOG
      *********************************/
 
+    /*
     private void initHandler(){
         handler = new Handler();
 
@@ -311,4 +332,5 @@ public class Recognizer implements RecognitionListener {
     private void cancelListeningCheck(){
         handler.removeCallbacks(listeningRunnable);
     }
+    */
 }

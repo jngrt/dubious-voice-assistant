@@ -20,6 +20,8 @@ public class Speaker {
     private SpeakerListener listener;
     private Context context;
 
+    private Boolean muteBeeps = false;
+
     private List<Voice> voices;
 
     public Speaker( SpeakerListener sListener, Context appContext ) {
@@ -27,8 +29,10 @@ public class Speaker {
         this.context = appContext;
 
         // Music stream is muted to prevent voice recogn. beeps
-        this.audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-        this.audioManager.setStreamMute(AudioManager.STREAM_MUSIC, true);
+        if (muteBeeps) {
+            this.audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+            this.audioManager.setStreamMute(AudioManager.STREAM_MUSIC, true);
+        }
 
 
         // Set up TTS
@@ -75,14 +79,18 @@ public class Speaker {
             public void onStart(String utteranceId) {
                 Log.i(LOG_TAG, "tts.onStart " + utteranceId);
 
-                audioManager.setStreamMute(AudioManager.STREAM_MUSIC, false);
+                if ( muteBeeps )
+                    audioManager.setStreamMute(AudioManager.STREAM_MUSIC, false);
 
             }
 
             @Override
             public void onDone(String utteranceId) {
                 Log.i(LOG_TAG, "tts.onDone " + utteranceId);
-                audioManager.setStreamMute(AudioManager.STREAM_MUSIC, true);
+
+                if ( muteBeeps )
+                    audioManager.setStreamMute(AudioManager.STREAM_MUSIC, true);
+
                 listener.speakingDone();
             }
 
@@ -90,7 +98,8 @@ public class Speaker {
             public void onError(String utteranceId) {
                 Log.i(LOG_TAG, "tts.onError " + utteranceId);
 
-                audioManager.setStreamMute(AudioManager.STREAM_MUSIC, true);
+                if ( muteBeeps )
+                    audioManager.setStreamMute(AudioManager.STREAM_MUSIC, true);
 
             }
         });
@@ -104,7 +113,8 @@ public class Speaker {
 
     public void destroy(){
         tts.shutdown();
-        audioManager.setStreamMute(AudioManager.STREAM_MUSIC, false);
+        if ( muteBeeps )
+            audioManager.setStreamMute(AudioManager.STREAM_MUSIC, false);
     }
 
 

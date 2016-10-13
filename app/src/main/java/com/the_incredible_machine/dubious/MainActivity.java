@@ -73,11 +73,11 @@ public class MainActivity extends Activity implements SpeakerListener, Recognize
      *********************************/
     private void nextStoryPart() {
         Log.i(LOG_TAG, "nextStoryPart()");
-        //if(storyManager.getCurrentStory().equals(StoryManager.START)) {
-        //    listen();
-        //} else {
-        speak();
-        //}
+        if(storyManager.getCurrentStory().equals(StoryManager.MENU_SILENT)) {
+            listen();
+        } else {
+            speak();
+        }
     }
     private void speak(){
         Log.i(LOG_TAG, "** SPEAKING");
@@ -98,6 +98,7 @@ public class MainActivity extends Activity implements SpeakerListener, Recognize
     private void listen(){
         Log.i(LOG_TAG, "** LISTEN");
         state = State.LISTENING;
+        //recognizer.init();
         recognizer.startListening();
         storyManager.startStoryTimer();
         updateView();
@@ -198,10 +199,12 @@ public class MainActivity extends Activity implements SpeakerListener, Recognize
         Log.i(LOG_TAG, text);
 
         if ( storyManager.checkStoryTriggers(results) ) {
+            Log.i(LOG_TAG, "triggers found");
             recognizer.stopListening();
             storyManager.stopStoryTimer();
             nextStoryPart();
         } else {
+            Log.i(LOG_TAG, "no triggers found");
             recognizer.continueListening();
             updateView();
         }
