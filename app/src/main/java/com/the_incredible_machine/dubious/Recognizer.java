@@ -18,7 +18,6 @@ public class Recognizer implements RecognitionListener {
     private enum State {
         INIT, STARTING, LISTENING, STOPPED
     }
-    //private boolean busyError = false;
     private boolean partialResults = false;
 
     private State state = State.INIT;
@@ -26,11 +25,6 @@ public class Recognizer implements RecognitionListener {
     private SpeechRecognizer speechRecognizer = null;
     private Intent recognizerIntent;
     private Context context;
-
-//    private Handler handler;
-//    private Runnable startedRunnable;
-//    private Runnable listeningRunnable;
-//    private Runnable busyRunnable;
 
     private RecognizerListener listener;
 
@@ -40,7 +34,6 @@ public class Recognizer implements RecognitionListener {
         this.context = context;
         this.listener = listener;
         init();
-        //initHandler();
     }
 
     public Boolean isListening() {
@@ -86,13 +79,10 @@ public class Recognizer implements RecognitionListener {
         Log.i(LOG_TAG, "stopListening");
 
         state = State.STOPPED;
-        //speechRecognizer.cancel();
 
         //We now destroy each time and do re-init when starting
         speechRecognizer.destroy();
 
-        //cancelListeningCheck();
-        //cancelStartedCheck();
     }
 
     public void continueListening() {
@@ -114,8 +104,7 @@ public class Recognizer implements RecognitionListener {
         Log.i(LOG_TAG, "destroy");
 
         speechRecognizer.destroy();
-        //cancelListeningCheck();
-        //cancelStartedCheck();
+
     }
 
 
@@ -133,8 +122,6 @@ public class Recognizer implements RecognitionListener {
 
         listener.onRecognizerSpeechBegin();
 
-        //reset check
-        //scheduleListeningCheck();
     }
 
     @Override
@@ -157,8 +144,7 @@ public class Recognizer implements RecognitionListener {
         Log.i(LOG_TAG, "onError " + errorMessage);
 
         if( errorCode == SpeechRecognizer.ERROR_RECOGNIZER_BUSY ){
-            //busyError = true;
-            //scheduleBusyCheck();
+
             resetListening();
         } else if ((errorCode == SpeechRecognizer.ERROR_NO_MATCH)
                 || (errorCode == SpeechRecognizer.ERROR_SPEECH_TIMEOUT)) {
@@ -173,8 +159,6 @@ public class Recognizer implements RecognitionListener {
     @Override
     public void onPartialResults(Bundle results) {
         Log.i(LOG_TAG, "onPartialResults");
-
-        //scheduleListeningCheck();
 
         ArrayList<String> matches = results
                 .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
@@ -197,19 +181,12 @@ public class Recognizer implements RecognitionListener {
 
         listener.onRecognizerInitDone();
 
-        //busyError = false;
-        //cancelBusyCheck();
-        //cancelStartedCheck();
-        //scheduleListeningCheck();
-
     }
 
     @Override
     public void onResults(Bundle results) {
         Log.i(LOG_TAG, "onResults");
 
-        //cancelListeningCheck();
-        //busyError = false;
         partialResults = false;
 
         if ( state == State.LISTENING ) {
@@ -266,71 +243,4 @@ public class Recognizer implements RecognitionListener {
 
         return message;
     }
-
-
-    /*********************************
-     * HANDLER / WATCHDOG
-     *********************************/
-
-    /*
-    private void initHandler(){
-        handler = new Handler();
-
-        startedRunnable = new Runnable(){
-            @Override
-            public void run(){
-                Log.i(LOG_TAG, "startedRunnable.run()");
-                if( state == State.STARTING ) {
-                    resetListening();
-                }
-            }
-        };
-
-        listeningRunnable = new Runnable() {
-            @Override
-            public void run() {
-                Log.i(LOG_TAG, "listeningRunnable.run()");
-                if (state == State.LISTENING) {
-                    resetListening();
-                }
-            }
-        };
-
-        busyRunnable = new Runnable() {
-            @Override
-            public void run() {
-                Log.i(LOG_TAG, "busyRunnable.run()");
-                if( state == State.LISTENING && busyError ){
-                    speechRecognizer.cancel();
-                    startListening();
-                }
-            }
-        };
-
-    }
-    private void scheduleBusyCheck(){
-        handler.removeCallbacks(busyRunnable);
-        handler.postDelayed(busyRunnable, 1000);
-    }
-    private void cancelBusyCheck(){
-        handler.removeCallbacks(busyRunnable);
-    }
-
-    private void scheduleStartedCheck(){
-        handler.removeCallbacks(startedRunnable);
-        handler.postDelayed(startedRunnable, 10000);
-    }
-    private void cancelStartedCheck(){
-        handler.removeCallbacks(startedRunnable);
-    }
-
-    private void scheduleListeningCheck(){
-        handler.removeCallbacks(listeningRunnable);
-        handler.postDelayed(listeningRunnable, 10000);
-    }
-
-    private void cancelListeningCheck(){
-        handler.removeCallbacks(listeningRunnable);
-    }
-    */
 }
